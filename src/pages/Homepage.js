@@ -3,6 +3,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Header from "../components/Header";
 import DisplayRounds from "../components/DisplayRounds";
+import Navbar from "../components/Navbar";
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -19,6 +20,7 @@ const Homepage = () => {
         </Grid>
       </Grid>
       <DisplayRounds />
+      <Navbar />
     </React.Fragment>
   );
 };

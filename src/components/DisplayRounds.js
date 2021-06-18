@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
   roundsContainer: {
     marginTop: "20px",
     width: "100%",
+    paddingBottom: 60,
   },
   roundBox: {
     backgroundColor: "lightGrey",
@@ -33,6 +34,26 @@ const dummyRounds = [
   },
   {
     course: { name: "Eg", holes: 18 },
+    players: [
+      { name: "anders", score: "+5" },
+      { name: "marcus", score: "+2" },
+      { name: "sindre", score: "+1" },
+      { name: "magnus", score: "-2" },
+    ],
+    date: "16. juni 2020",
+  },
+  {
+    course: { name: "Søgne", holes: 18 },
+    players: [
+      { name: "anders", score: "+5" },
+      { name: "marcus", score: "+2" },
+      { name: "sindre", score: "+1" },
+      { name: "magnus", score: "-2" },
+    ],
+    date: "16. juni 2020",
+  },
+  {
+    course: { name: "Søgne", holes: 18 },
     players: [
       { name: "anders", score: "+5" },
       { name: "marcus", score: "+2" },
