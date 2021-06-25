@@ -59,6 +59,11 @@ REST_FRAMEWORK = {
 # Application definition
 
 INSTALLED_APPS = [
+    #Apps
+    'apps.users', 
+    'apps.courses',
+    'apps.golf_rounds', 
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,10 +76,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
 
-    #Apps
-    'apps.users', 
-    'apps.courses',
-    'apps.golf_rounds', 
 ]
 
 MIDDLEWARE = [
