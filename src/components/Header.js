@@ -1,6 +1,7 @@
 import { Button, Toolbar, Typography } from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import axiosInstance from "../utils/axiosHandler";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -11,6 +12,14 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
 }));
+
+const handleLogout = () => {
+  axiosInstance
+    .post("api/users/logout/", { refresh: localStorage.getItem("refresh") })
+    .then((res) => {
+      console.log(res);
+    });
+};
 
 const Header = () => {
   const classes = useStyles();
@@ -26,7 +35,7 @@ const Header = () => {
       >
         Disc golf stats
       </Typography>
-      <Button variant="outlined" size="small">
+      <Button onClick={() => handleLogout()} variant="outlined" size="small">
         Log out
       </Button>
     </Toolbar>

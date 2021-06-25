@@ -21,107 +21,73 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const dummyRounds = [
-  {
-    course: { name: "Sukkevann", holes: 18 },
-    players: [
-      { name: "anders", score: "+5" },
-      { name: "marcus", score: "+2" },
-      { name: "sindre", score: "+1" },
-      { name: "magnus", score: "-2" },
-    ],
-    date: "16. juni 2020",
-  },
-  {
-    course: { name: "Eg", holes: 18 },
-    players: [
-      { name: "anders", score: "+5" },
-      { name: "marcus", score: "+2" },
-      { name: "sindre", score: "+1" },
-      { name: "magnus", score: "-2" },
-    ],
-    date: "16. juni 2020",
-  },
-  {
-    course: { name: "Søgne", holes: 18 },
-    players: [
-      { name: "anders", score: "+5" },
-      { name: "marcus", score: "+2" },
-      { name: "sindre", score: "+1" },
-      { name: "magnus", score: "-2" },
-    ],
-    date: "16. juni 2020",
-  },
-  {
-    course: { name: "Søgne", holes: 18 },
-    players: [
-      { name: "anders", score: "+5" },
-      { name: "marcus", score: "+2" },
-      { name: "sindre", score: "+1" },
-      { name: "magnus", score: "-2" },
-    ],
-    date: "16. juni 2020",
-  },
-  {
-    course: { name: "Søgne", holes: 18 },
-    players: [
-      { name: "anders", score: "+5" },
-      { name: "marcus", score: "+2" },
-      { name: "sindre", score: "+1" },
-      { name: "magnus", score: "-2" },
-    ],
-    date: "16. juni 2020",
-  },
-];
+// {
+//   course: { name: "Sukkevann", holes: 18 },
+//   players: [
+//     { name: "anders", score: "+5" },
+//     { name: "marcus", score: "+2" },
+//     { name: "sindre", score: "+1" },
+//     { name: "magnus", score: "-2" },
+//   ],
+//   date: "16. juni 2020",
+// }
 
-const DisplayRounds = () => {
+const DisplayRounds = (props) => {
   const classes = useStyles();
+
+  const generateRoundBox = (round, index, finished) => {
+    return (
+      <Grid
+        className={classes.roundBox}
+        item
+        key={index * 0.2345}
+        style={{
+          marginBottom: "10px",
+          minWidth: "90%",
+          paddingBottom: "5px",
+        }}
+      >
+        <Box
+          onClick={() => {
+            window.location = `rounds/${round.id}`;
+          }}
+        >
+          <p>
+            <b>{round.course.name + " - " + round.course.holes + " Holes"}</b>
+          </p>
+          {/*Gjør datoen mindre og tettere mot navnet*/}
+          <p>{round.date}</p>
+          <Grid container direction="row" spacing={1} justify="space-around">
+            {round.players.map((player, index) => (
+              <Grid key={index * 0.6969} item>
+                {/* {player.name + ":" + player.score} */}
+                <Badge
+                  badgeContent={round.scores[index]}
+                  //Add some kind of nice styling to the badge
+                  //color="secondary"
+                  backgroundColor="primary"
+                >
+                  {player}
+                </Badge>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Grid>
+    );
+  };
+
   return (
     <div className={classes.roundsContainer}>
-      <Typography align="center">Rounds</Typography>
+      <Typography align="center">Ongoing rounds</Typography>
       <Grid container justify="center" direction="column" alignItems="center">
-        {dummyRounds.map((round, index) => (
-          <Grid
-            className={classes.roundBox}
-            item
-            key={index * 0.2345}
-            style={{
-              marginBottom: "10px",
-              minWidth: "90%",
-              paddingBottom: "5px",
-            }}
-          >
-            <Box>
-              <p>
-                <b>
-                  {round.course.name + " - " + round.course.holes + " Holes"}
-                </b>
-              </p>
-              {/*Gjør datoen mindre og tettere mot navnet*/}
-              <p>{round.date}</p>
-              <Grid
-                container
-                direction="row"
-                spacing={1}
-                justify="space-around"
-              >
-                {round.players.map((player, index) => (
-                  <Grid key={index * 0.6969} item>
-                    {/* {player.name + ":" + player.score} */}
-                    <Badge
-                      badgeContent={player.score}
-                      //Add some kind of nice styling to the badge
-                      //color="secondary"
-                      backgroundColor="primary"
-                    >
-                      {player.name}
-                    </Badge>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          </Grid>
-        ))}
+        {props.data.ongoing_rounds.map((round, index) =>
+          generateRoundBox(round, index * 0.642, false)
+        )}
+        <Typography align="center">Finished rounds</Typography>
+        {props.data.finished_rounds.map((round, index) =>
+          generateRoundBox(round, index, true)
+        )}
       </Grid>
     </div>
   );

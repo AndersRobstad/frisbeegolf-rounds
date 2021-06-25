@@ -2,6 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Grid, Button, Link, Typography } from "@material-ui/core";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -16,7 +17,11 @@ const handleLogIn = (formEvent) => {
   formEvent.preventDefault();
   const formData = new FormData(formEvent.target);
   const data = Object.fromEntries(formData);
-  console.log(data);
+  axios.post("api/users/authenticate/", data).then((res) => {
+    console.log(res);
+    sessionStorage.setItem("access", res.data.access);
+    sessionStorage.setItem("refresh", res.data.refresh);
+  });
 };
 
 const Homepage = () => {

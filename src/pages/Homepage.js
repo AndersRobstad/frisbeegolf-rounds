@@ -1,25 +1,34 @@
-import { Button, Grid, Toolbar, Typography } from "@material-ui/core";
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { Button, Grid } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+//import { makeStyles } from "@material-ui/core/styles";
 import Header from "../components/Header";
 import DisplayRounds from "../components/DisplayRounds";
 import Navbar from "../components/Navbar";
+import axiosInstance from "../utils/axiosHandler";
 
-const useStyles = makeStyles((theme) => ({}));
+//const useStyles = makeStyles((theme) => ({}));
 
 const Homepage = () => {
-  const classes = useStyles();
+  //const classes = useStyles();
+  const [isRounds, setRounds] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axiosInstance.get(`/api/rounds/`);
+      setRounds(response.data);
+    };
+    fetchData();
+  }, []);
   return (
     <React.Fragment>
       <Header />
       <Grid container justify="center">
         <Grid item>
-          <Button variant="contained" color="primary" size="large">
+          <Button href="/new" variant="contained" color="primary" size="large">
             Create new scorecard
           </Button>
         </Grid>
       </Grid>
-      <DisplayRounds />
+      {isRounds ? <DisplayRounds data={isRounds} /> : null}
       <Navbar />
     </React.Fragment>
   );

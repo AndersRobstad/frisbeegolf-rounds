@@ -5,6 +5,9 @@ import Courses from "./components/Courses";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Homepage from "./pages/Homepage";
+import RoundDetails from "./components/RoundDetails";
+import NewRoundPage from "./pages/NewRoundPage";
+import OngoingRoundPage from "./pages/OngoingRoundPage";
 
 function App() {
   return (
@@ -19,8 +22,17 @@ function App() {
         <Route path="/register" exact>
           <Register />
         </Route>
-        <Route path="/home" exact>
+        <Route path="/rounds" exact>
           <Homepage />
+        </Route>
+        <Route path="/round" exact>
+          <RoundDetails />
+        </Route>
+        <Route path="/new" exact>
+          <NewRoundPage />
+        </Route>
+        <Route path="/rounds/:id">
+          <OngoingRoundPage />
         </Route>
       </Switch>
     </Router>
