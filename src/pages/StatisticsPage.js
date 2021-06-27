@@ -6,7 +6,7 @@ const StatisticsPage = () => {
   return (
     <React.Fragment>
       <Header />
-      <h1>Stats</h1>
+      <h1>Not here yet</h1>
       <Navbar />
     </React.Fragment>
   );

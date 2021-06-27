@@ -1,4 +1,4 @@
-import { Badge, Box, Grid, Typography } from "@material-ui/core";
+import { Badge, Box, Divider, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -9,28 +9,15 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 60,
   },
   roundBox: {
-    backgroundColor: "lightGrey",
+    backgroundColor: theme.palette.primary.secondary,
+    color: "white",
+    borderRadius: "10px",
 
     "&:hover": {
-      backgroundColor: "darkgrey",
       cursor: "pointer",
     },
   },
-  test: {
-    width: "80%",
-  },
 }));
-
-// {
-//   course: { name: "Sukkevann", holes: 18 },
-//   players: [
-//     { name: "anders", score: "+5" },
-//     { name: "marcus", score: "+2" },
-//     { name: "sindre", score: "+1" },
-//     { name: "magnus", score: "-2" },
-//   ],
-//   date: "16. juni 2020",
-// }
 
 const DisplayRounds = (props) => {
   const classes = useStyles();
@@ -60,12 +47,10 @@ const DisplayRounds = (props) => {
           <Grid container direction="row" spacing={1} justify="space-around">
             {round.players.map((player, index) => (
               <Grid key={index * 0.6969} item>
-                {/* {player.name + ":" + player.score} */}
                 <Badge
-                  badgeContent={round.scores[index]}
-                  //Add some kind of nice styling to the badge
-                  //color="secondary"
-                  backgroundColor="primary"
+                  badgeContent={
+                    (round.scores[index] > 0 ? "+" : "") + round.scores[index]
+                  }
                 >
                   {player}
                 </Badge>
@@ -79,7 +64,10 @@ const DisplayRounds = (props) => {
 
   return (
     <div className={classes.roundsContainer}>
-      <Typography align="center">Ongoing rounds</Typography>
+      <Divider />
+      {props.data.ongoing_rounds.length > 0 ? (
+        <Typography align="center">Ongoing rounds</Typography>
+      ) : null}
       <Grid container justify="center" direction="column" alignItems="center">
         {props.data.ongoing_rounds.map((round, index) =>
           generateRoundBox(round, index * 0.642, false)

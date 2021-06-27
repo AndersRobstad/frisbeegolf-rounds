@@ -9,88 +9,17 @@ import {
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosHandler";
+import { makeStyles } from "@material-ui/core/styles";
 
-const dummyData = {
-  course: "Sukkevann",
-  date: "16.10-1999",
-  players: ["anders", "magnus", "marcus", "sindre"],
-  holes: [
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-    {
-      par: 3,
-      scores: [1, 2, 3, 4],
-    },
-  ],
-};
+const useStyles = makeStyles((theme) => ({
+  tableCell: {
+    padding: "7px 0 7px 0",
+    borderRight: "0.6px solid white",
+  },
+}));
 
 const RoundDetails = () => {
+  const classes = useStyles();
   const [isRound, setRound] = useState();
   const params = useParams();
   const splits = isRound ? (isRound.course.holes === 18 ? 2 : 3) : 2;
@@ -134,13 +63,19 @@ const RoundDetails = () => {
           <TableRow>
             <TableCell></TableCell>
             <TableCell align="center" colSpan={perSection}>
-              Hole
+              Holes
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell></TableCell>
+            <TableCell style={{ width: "10%" }}></TableCell>
             {[...Array(perSection).keys()].map((number) => (
-              <TableCell align="center" key={number * 0.236783}>
+              <TableCell
+                padding="none"
+                align="center"
+                key={number * 0.236783}
+                className={classes.tableCell}
+                style={{ width: 60 / perSection + "%" }}
+              >
                 {number + 1 + startingHole}
               </TableCell>
             ))}
@@ -149,18 +84,28 @@ const RoundDetails = () => {
         <TableBody>
           {isRound.players.map((name, playerIndex) => (
             <TableRow key={playerIndex * 0.237535}>
-              <TableCell>{name}</TableCell>
+              <TableCell
+                padding="none"
+                align="center"
+                style={{ width: "10%" }}
+                className={classes.tableCell}
+              >
+                {name}
+              </TableCell>
               {[...isRound.hole_results]
                 .splice(startingHole, perSection + startingHole)
                 .map((hole, index) => (
                   <TableCell
+                    padding="none"
                     align="center"
                     key={index * 0.2345}
                     style={{
                       backgroundColor: getColor(
                         hole.scores[playerIndex] - hole.hole.par
                       ),
+                      width: 60 / perSection + "%",
                     }}
+                    className={classes.tableCell}
                   >
                     {hole.scores[playerIndex]}
                   </TableCell>
@@ -171,7 +116,7 @@ const RoundDetails = () => {
       </React.Fragment>
     );
   };
-  console.log(isRound);
+
   return (
     <React.Fragment>
       {isRound ? (
@@ -196,7 +141,7 @@ const RoundDetails = () => {
               })}
             </TableBody>
           </Table>
-          <Table>
+          <Table className={classes.table} style={{ tableLayout: "auto" }}>
             {[...Array(splits).keys()].map((number) =>
               generateSection(number, perSection)
             )}

@@ -20,13 +20,13 @@ class CreateUserView(APIView):
 
 class LogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
+
     def post(self, request):
-            print("USER: ", request.user)
-            # try:
-            #     refresh_token = request.data["refresh"]
-            #     token = RefreshToken(token=refresh_token)
-            #     token.blacklist()
-            #     return Response(status=status.HTTP_205_RESET_CONTENT)
-            # except Exception:
-            #     return Response(status=status.HTTP_400_BAD_REQUEST)
-            return Response("LOGget ut :))")
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(token=refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            print(e)
+            return Response(status=status.HTTP_400_BAD_REQUEST)

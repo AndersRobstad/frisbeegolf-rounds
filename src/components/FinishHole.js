@@ -1,4 +1,5 @@
 import {
+  Badge,
   Divider,
   IconButton,
   Table,
@@ -13,16 +14,20 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSwipeable } from "react-swipeable";
 
 const useStyles = makeStyles((theme) => ({
   prevButton: {
     position: "absolute",
-    top: "50%",
+    top: "25%",
   },
   nextButton: {
     position: "absolute",
-    top: "50%",
+    top: "25%",
     right: "0",
+  },
+  swipeEventBox: {
+    minHeight: "450px",
   },
 }));
 
@@ -48,8 +53,14 @@ const FinishHole = (props) => {
     props.setResultsChanged();
   };
 
+  const handlers = useSwipeable({
+    onSwipedLeft: () => props.changeHole(true, props.holeScoreId),
+    onSwipedRight: () => props.changeHole(false, props.holeScoreId),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: false,
+  });
   return (
-    <React.Fragment>
+    <div {...handlers} className={classes.swipeEventBox}>
       {props.data.hole.hole_no !== 1 ? (
         <IconButton
           className={classes.prevButton}
@@ -74,7 +85,14 @@ const FinishHole = (props) => {
             <TableRow key={index * 0.68832}>
               <TableCell align="center">
                 <Typography component="h6" variant="h6">
-                  {player}
+                  <Badge
+                    badgeContent={
+                      (props.currentScores[index] > 0 ? "+" : "") +
+                      props.currentScores[index]
+                    }
+                  >
+                    {player[0].toUpperCase() + player.slice(1).toLowerCase()}
+                  </Badge>
                 </Typography>
               </TableCell>
               <TableCell>
@@ -85,10 +103,11 @@ const FinishHole = (props) => {
                 />
               </TableCell>
               <TableCell>
-                {/* Gjør større */}
-                {props.data.scores[index] === 0
-                  ? "-"
-                  : props.data.scores[index]}
+                <Typography component="p" variant="h6">
+                  {props.data.scores[index] === 0
+                    ? "-"
+                    : props.data.scores[index]}
+                </Typography>
               </TableCell>
               <TableCell>
                 <AddBoxIcon
@@ -109,7 +128,7 @@ const FinishHole = (props) => {
           <NavigateNextIcon color="primary" fontSize="large" />
         </IconButton>
       ) : null}
-    </React.Fragment>
+    </div>
   );
 };
 

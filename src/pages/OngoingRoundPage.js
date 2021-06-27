@@ -34,6 +34,12 @@ const OngoingRoundPage = () => {
   }, [params.id]);
 
   const changeHole = (next, holeId) => {
+    if (
+      (next && isCurrentHole.hole.hole_no === isRound.hole_results.length) ||
+      (!next && isCurrentHole.hole.hole_no === 1)
+    ) {
+      return;
+    }
     if (resultsChanged) {
       axiosInstance
         .post(`/api/rounds/finish-hole/${holeId}/`, {
@@ -51,11 +57,29 @@ const OngoingRoundPage = () => {
     resultsChanged = true;
   };
 
+  const getCurrentScores = () => {
+    const scores = new Array(isRound.players.length).fill(0);
+    isRound.hole_results.forEach((hole_result) => {
+      hole_result.scores.forEach((score, index) => {
+        console.log();
+        scores[index] += score !== 0 ? score - hole_result.hole.par : 0;
+      });
+    });
+    return scores;
+  };
+
   return (
     <React.Fragment>
       <Header />
       {isRound && isCurrentHole ? (
         <React.Fragment>
+          {isCurrentHole.hole.hole_no === isRound.hole_results.length ? (
+            <FinishRoundDialog
+              round={isRound}
+              roundId={params.id}
+              lastHole={isCurrentHole}
+            />
+          ) : null}
           <FinishHole
             data={isCurrentHole}
             players={isRound.players}
@@ -65,14 +89,8 @@ const OngoingRoundPage = () => {
               isRound.hole_results[isCurrentHole.hole.hole_no - 1].id
             }
             setResultsChanged={setResultsChanged}
+            currentScores={getCurrentScores()}
           />
-          {isCurrentHole.hole.hole_no === isRound.hole_results.length ? (
-            <FinishRoundDialog
-              round={isRound}
-              roundId={params.id}
-              lastHole={isCurrentHole}
-            />
-          ) : null}
         </React.Fragment>
       ) : (
         <h5>Loading round...</h5>

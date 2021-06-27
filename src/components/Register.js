@@ -4,6 +4,7 @@ import { TextField, Grid, Button, Link, Typography } from "@material-ui/core";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CustomImageLoader from "react-custom-image-loader.";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -62,6 +63,7 @@ const Register = () => {
               variant="filled"
               label="username"
               name="username"
+              inputProps={{ maxLength: 9 }}
               required
             />
           </Grid>
