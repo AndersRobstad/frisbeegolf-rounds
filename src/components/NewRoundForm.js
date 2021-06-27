@@ -40,7 +40,6 @@ const NewRoundForm = () => {
         course: isCourse,
         players: isPlayers,
       };
-      console.log(data);
       axiosInstance
         .post("api/rounds/new/", data)
         .then((res) => console.log(res));

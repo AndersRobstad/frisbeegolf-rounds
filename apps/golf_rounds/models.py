@@ -12,6 +12,9 @@ class HoleResult(models.Model):
     def get_par(self):
         return self.hole.par
 
+    def __str__(self):
+        return str(self.hole.hole_no) + " - " + str(self.scores)
+
 class GolfRoundAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 

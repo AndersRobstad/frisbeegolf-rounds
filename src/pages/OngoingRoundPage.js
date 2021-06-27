@@ -11,26 +11,44 @@ const OngoingRoundPage = () => {
   const params = useParams();
   const [isRound, setRound] = useState("");
   const [isCurrentHole, setCurrentHole] = useState();
-  //Send inn en changeHole funksjon i props fra OngoingRoundPage som brukes her.
+
+  let resultsChanged = false;
+  //Faktisk funksjonalitet for dette så det ikke postes noe dersm ingenting er endret.
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosInstance.get(`/api/rounds/${params.id}`);
       setRound(response.data);
+      const currentHole = response.data.hole_results.find((hole) =>
+        hole.scores.every((s) => s === 0)
+      );
       setCurrentHole(
         response.data.hole_results[
-          response.data.hole_results.find((hole) =>
-            hole.scores.every((s) => s === 0)
-          ).hole.hole_no - 1
+          (currentHole
+            ? currentHole.hole.hole_no
+            : response.data.hole_results.length) - 1
         ]
       );
     };
     fetchData();
   }, [params.id]);
 
-  const changeHole = (next) => {
+  const changeHole = (next, holeId) => {
+    if (resultsChanged) {
+      axiosInstance
+        .post(`/api/rounds/finish-hole/${holeId}/`, {
+          scores: isCurrentHole.scores,
+        })
+        .then(() => {
+          resultsChanged = false;
+        });
+    }
     let nextHoleIndex = isCurrentHole.hole.hole_no + (next ? 1 : -1) - 1;
     setCurrentHole(isRound.hole_results[nextHoleIndex]);
+  };
+
+  const setResultsChanged = () => {
+    resultsChanged = true;
   };
 
   return (
@@ -43,9 +61,17 @@ const OngoingRoundPage = () => {
             players={isRound.players}
             changeHole={changeHole}
             holes={isRound.hole_results.length}
+            holeScoreId={
+              isRound.hole_results[isCurrentHole.hole.hole_no - 1].id
+            }
+            setResultsChanged={setResultsChanged}
           />
           {isCurrentHole.hole.hole_no === isRound.hole_results.length ? (
-            <FinishRoundDialog round={isRound} />
+            <FinishRoundDialog
+              round={isRound}
+              roundId={params.id}
+              lastHole={isCurrentHole}
+            />
           ) : null}
         </React.Fragment>
       ) : (

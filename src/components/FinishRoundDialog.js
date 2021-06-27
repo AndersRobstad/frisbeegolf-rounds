@@ -1,6 +1,7 @@
-import { Button, Divider, Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import axiosInstance from "../utils/axiosHandler";
 
 const useStyles = makeStyles((theme) => ({
   finishRoundContainer: {
@@ -46,7 +47,16 @@ const FinishRoundDialog = (props) => {
   };
 
   const postRoundData = () => {
-    console.log("POSTING");
+    axiosInstance
+      .post(`/api/rounds/${props.roundId}/`, {
+        lastHoleScores: props.lastHole.scores,
+        lastHoleId: props.lastHole.id,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          window.location = `/rounds/${res.data}/overview/`;
+        }
+      });
   };
 
   return (

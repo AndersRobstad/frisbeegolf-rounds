@@ -45,6 +45,7 @@ const FinishHole = (props) => {
     }
     props.data.scores[index] = newScore;
     forceUpdate();
+    props.setResultsChanged();
   };
 
   return (
@@ -52,7 +53,7 @@ const FinishHole = (props) => {
       {props.data.hole.hole_no !== 1 ? (
         <IconButton
           className={classes.prevButton}
-          onClick={() => props.changeHole(false)}
+          onClick={() => props.changeHole(false, props.holeScoreId)}
         >
           <NavigateBeforeIcon color="primary" fontSize="large" />
         </IconButton>
@@ -84,6 +85,7 @@ const FinishHole = (props) => {
                 />
               </TableCell>
               <TableCell>
+                {/* Gjør større */}
                 {props.data.scores[index] === 0
                   ? "-"
                   : props.data.scores[index]}
@@ -102,7 +104,7 @@ const FinishHole = (props) => {
       {props.holes !== props.data.hole.hole_no ? (
         <IconButton
           className={classes.nextButton}
-          onClick={() => props.changeHole(true)}
+          onClick={() => props.changeHole(true, props.holeScoreId)}
         >
           <NavigateNextIcon color="primary" fontSize="large" />
         </IconButton>

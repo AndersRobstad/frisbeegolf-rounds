@@ -33,8 +33,8 @@ class GolfRoundDetailSerializer(serializers.ModelSerializer):
         for hole_result in obj.hole_results.all():
             par = hole_result.get_par()
             scores = hole_result.scores
-            result[0] = result[0] + ((scores[0] - par) if scores[0] != 0 else 0)
-            result[1] = result[1] + ((scores[1] - par) if scores[1] != 0 else 0)
+            for i in range(len(obj.players.all())):
+                result[i] = result[i] + ((scores[i] - par) if scores[i] != 0 else 0)
         return result
 
     class Meta:

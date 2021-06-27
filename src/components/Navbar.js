@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <BottomNavigation
       onChange={(event, newValue) => {
-        console.log(newValue);
+        window.location = `/${newValue}`;
       }}
       showLabels
       className={classes.navbar}

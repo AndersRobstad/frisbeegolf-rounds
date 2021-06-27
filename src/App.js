@@ -5,9 +5,11 @@ import Courses from "./components/Courses";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Homepage from "./pages/Homepage";
-import RoundDetails from "./components/RoundDetails";
 import NewRoundPage from "./pages/NewRoundPage";
 import OngoingRoundPage from "./pages/OngoingRoundPage";
+import RoundOverviewPage from "./pages/RoundOverviewPage";
+import CoursesPage from "./pages/CoursesPage";
+import StatisticsPage from "./pages/StatisticsPage";
 
 function App() {
   return (
@@ -17,22 +19,25 @@ function App() {
           <Login />
         </Route>
         <Route path="/courses" exact>
-          <Courses />
+          <CoursesPage />
+        </Route>
+        <Route path="/statistics" exact>
+          <StatisticsPage />
         </Route>
         <Route path="/register" exact>
           <Register />
         </Route>
-        <Route path="/rounds" exact>
-          <Homepage />
-        </Route>
-        <Route path="/round" exact>
-          <RoundDetails />
-        </Route>
         <Route path="/new" exact>
           <NewRoundPage />
         </Route>
-        <Route path="/rounds/:id">
+        <Route path="/rounds" exact>
+          <Homepage />
+        </Route>
+        <Route path="/rounds/:id" exact>
           <OngoingRoundPage />
+        </Route>
+        <Route path="/rounds/:id/overview" exact>
+          <RoundOverviewPage />
         </Route>
       </Switch>
     </Router>

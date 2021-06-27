@@ -1,5 +1,5 @@
 from rest_framework import serializers, status
-from .models import GolfRound
+from .models import GolfRound, HoleResult
 from rest_framework.response import Response
 from django.core.exceptions import ValidationError
 from rest_framework.views import APIView
@@ -10,6 +10,7 @@ from users.serializers import UsernameAndIdSerializer
 from courses.models import Course
 from courses.serializers import CourseNameAndIdSerializer
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 
 class GolfRoundView(APIView):
     permission_classes = [IsAuthenticated]
@@ -53,6 +54,30 @@ class RoundDetails(APIView):
     # Lag permission class for isOwner eller noe. 
 
     def get(self, request, id):
-        round = GolfRound.objects.get(id = id)
+        round = get_object_or_404(GolfRound, id=id)
         serializer = GolfRoundSerializer(round)
+        return Response(serializer.data)
+
+    def post(self, request, id):
+        round = get_object_or_404(GolfRound, id=id)
+        round.finished = True
+        hole_scores = get_object_or_404(HoleResult, id=request.data['lastHoleId'])
+        hole_scores.scores = request.data['lastHoleScores']
+        round.save()
+        hole_scores.save()
+        return Response(round.id)
+
+class FinishHoleView(APIView):
+
+    def post(self, request, id):
+        hole_result = get_object_or_404(HoleResult, id=id)
+        hole_result.scores = request.data['scores']
+        hole_result.save()
+        return Response()
+
+class RoundOverviewView(APIView):
+
+    def get(self, request, id):
+        round = get_object_or_404(GolfRound, id=id)
+        serializer = GolfRoundDetailSerializer(round)
         return Response(serializer.data)
