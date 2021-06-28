@@ -9,5 +9,8 @@ class User(AbstractUser):
     def natural_key(self):
         return (self.username)
 
+    class Meta:
+        db_table = 'auth_user'
+
 class UserAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
