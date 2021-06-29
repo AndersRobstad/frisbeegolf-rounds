@@ -19,26 +19,56 @@ import { useSwipeable } from "react-swipeable";
 const useStyles = makeStyles((theme) => ({
   prevButton: {
     position: "absolute",
-    top: "25%",
+    top: "15%",
   },
   nextButton: {
     position: "absolute",
-    top: "25%",
+    top: "15%",
     right: "0",
   },
   swipeEventBox: {
     minHeight: "450px",
   },
+  animate: {
+    animation: `$fadeInRight 0.4s`,
+  },
+  playerScore: {
+    animation: `$fadeInTop 0.4s`,
+  },
+  "@keyframes fadeInTop": {
+    "0%": {
+      opacity: 0,
+      transform: "translateY(-150%)",
+    },
+    "100%": {
+      opacity: 1,
+      transform: "translateY(0)",
+    },
+  },
+  "@keyframes fadeInRight": {
+    "0%": {
+      opacity: 1,
+      transform: "translateX(-150%)",
+    },
+    "50%": {
+      opacity: 0.25,
+    },
+    "100%": {
+      opacity: 1,
+      transform: "translateX(0)",
+    },
+  },
 }));
 
-function useForceUpdate() {
+const useForceUpdate = () => {
   const [value, setValue] = useState(0); // integer state
   return () => setValue((value) => value + 1); // update the state to force render
-}
+};
 
 const FinishHole = (props) => {
   const classes = useStyles();
   const forceUpdate = useForceUpdate();
+  const [isNewPage, setNewPage] = useState(true);
 
   const changeScore = (negative, index) => {
     const prevScore = props.data.scores[index];
@@ -49,22 +79,35 @@ const FinishHole = (props) => {
       newScore = prevScore + (negative ? -1 : 1);
     }
     props.data.scores[index] = newScore;
+    props.currentScores[index] = newScore - props.data.hole.par;
+    setNewPage(false);
     forceUpdate();
     props.setResultsChanged();
   };
 
+  const changeHole = (next, holeId) => {
+    setNewPage(true);
+    props.changeHole(next, holeId);
+  };
+
   const handlers = useSwipeable({
-    onSwipedLeft: () => props.changeHole(true, props.holeScoreId),
-    onSwipedRight: () => props.changeHole(false, props.holeScoreId),
+    onSwipedLeft: () => changeHole(true, props.holeScoreId),
+    onSwipedRight: () => changeHole(false, props.holeScoreId),
     preventDefaultTouchmoveEvent: true,
     trackMouse: false,
   });
   return (
-    <div {...handlers} className={classes.swipeEventBox}>
+    <div
+      {...handlers}
+      className={`${classes.swipeEventBox} + ${
+        isNewPage ? classes.animate : ""
+      }`}
+      key={Math.random()}
+    >
       {props.data.hole.hole_no !== 1 ? (
         <IconButton
           className={classes.prevButton}
-          onClick={() => props.changeHole(false, props.holeScoreId)}
+          onClick={() => changeHole(false, props.holeScoreId)}
         >
           <NavigateBeforeIcon color="primary" fontSize="large" />
         </IconButton>
@@ -103,7 +146,12 @@ const FinishHole = (props) => {
                 />
               </TableCell>
               <TableCell>
-                <Typography component="p" variant="h6">
+                <Typography
+                  component="p"
+                  variant="h6"
+                  className={classes.playerScore}
+                  key={Math.random()}
+                >
                   {props.data.scores[index] === 0
                     ? "-"
                     : props.data.scores[index]}
@@ -123,7 +171,7 @@ const FinishHole = (props) => {
       {props.holes !== props.data.hole.hole_no ? (
         <IconButton
           className={classes.nextButton}
-          onClick={() => props.changeHole(true, props.holeScoreId)}
+          onClick={() => changeHole(true, props.holeScoreId)}
         >
           <NavigateNextIcon color="primary" fontSize="large" />
         </IconButton>

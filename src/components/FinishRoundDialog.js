@@ -9,15 +9,19 @@ const useStyles = makeStyles((theme) => ({
   finishRoundContainer: {
     width: "100%",
   },
-  partialRoundDialog: {
-    position: "absolute",
-    top: "40%",
-    left: "10%",
-    right: "10%",
-    width: "80%",
-    backgroundColor: "grey",
-    paddingBottom: "5px",
-    borderRadius: "10px",
+  finishButton: {
+    marginBottom: "30px",
+    animation: `$fadeInRight 0.4s`,
+  },
+  "@keyframes fadeInRight": {
+    "0%": {
+      opacity: 0,
+      transform: "translateX(-150%)",
+    },
+    "100%": {
+      opacity: 1,
+      transform: "translateX(0)",
+    },
   },
 }));
 
@@ -76,6 +80,7 @@ const FinishRoundDialog = (props) => {
               variant="contained"
               color="primary"
               size="large"
+              key={Math.random()}
             >
               Yes
             </Button>
@@ -112,7 +117,12 @@ const FinishRoundDialog = (props) => {
         </Grid>
       </div>
       <ToastContainer
-        bodyStyle={{ width: "100%", textAlign: "center", color: "black" }}
+        bodyStyle={{
+          width: "100%",
+          textAlign: "center",
+          color: "black",
+        }}
+        style={{ marginTop: "25%" }}
         closeOnClick={false}
         draggable={false}
         autoClose={false}

@@ -40,15 +40,17 @@ const NewRoundForm = () => {
         course: isCourse,
         players: isPlayers,
       };
-      axiosInstance
-        .post("api/rounds/new/", data)
-        .then((res) => console.log(res));
+      axiosInstance.post("api/rounds/new/", data).then((res) => {
+        if (res.status === 201) {
+          window.location = `/rounds/${res.data.id}/`;
+        }
+      });
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosInstance.get("api/rounds/new");
+      const response = await axiosInstance.get("/api/rounds/new");
       setData(response.data);
     };
     fetchData();

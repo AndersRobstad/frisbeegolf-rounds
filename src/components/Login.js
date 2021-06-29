@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: "auto",
       width: "80%",
+      marginTop: "5%",
     },
   },
 }));
@@ -33,10 +34,10 @@ const Homepage = () => {
   const classes = useStyles();
   return (
     <React.Fragment>
+      <Typography compoennt="h3" variant="h3" align="center">
+        Log in
+      </Typography>
       <form className={classes.form} onSubmit={handleLogIn}>
-        <Typography compoennt="h3" variant="h3" align="center">
-          Log in
-        </Typography>
         <Grid
           container
           direction="column"

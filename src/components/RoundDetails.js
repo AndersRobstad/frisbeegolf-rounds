@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosHandler";
 import { makeStyles } from "@material-ui/core/styles";
+import { getReadableDate } from "../utils/Utils";
 
 const useStyles = makeStyles((theme) => ({
   tableCell: {
@@ -122,7 +123,7 @@ const RoundDetails = () => {
       {isRound ? (
         <React.Fragment>
           <Typography component="h5" variant="h5" align="center" noWrap>
-            {isRound.course.name + " - " + isRound.date}
+            {isRound.course.name + " - " + getReadableDate(isRound.date)}
           </Typography>
           <Table>
             <TableBody>

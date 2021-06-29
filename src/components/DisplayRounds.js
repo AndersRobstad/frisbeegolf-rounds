@@ -1,6 +1,7 @@
 import { Badge, Box, Divider, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { getReadableDate } from "../utils/Utils";
 
 const useStyles = makeStyles((theme) => ({
   roundsContainer: {
@@ -17,6 +18,14 @@ const useStyles = makeStyles((theme) => ({
       cursor: "pointer",
     },
   },
+  courseInfo: {
+    marginTop: "5px",
+    marginBottom: 0,
+  },
+  courseDate: {
+    marginTop: "4px",
+    paddingBottom: "20px",
+  },
 }));
 
 const DisplayRounds = (props) => {
@@ -32,6 +41,7 @@ const DisplayRounds = (props) => {
           marginBottom: "10px",
           minWidth: "90%",
           paddingBottom: "5px",
+          paddingLeft: "5px",
         }}
       >
         <Box
@@ -39,11 +49,13 @@ const DisplayRounds = (props) => {
             window.location = `rounds/${round.id}`;
           }}
         >
-          <p>
+          <h3 className={classes.courseInfo}>
             <b>{round.course.name + " - " + round.course.holes + " Holes"}</b>
-          </p>
+          </h3>
           {/*Gjør datoen mindre og tettere mot navnet*/}
-          <p>{round.date}</p>
+          <Typography component="h6" variant="p" className={classes.courseDate}>
+            {getReadableDate(round.date)}
+          </Typography>
           <Grid container direction="row" spacing={1} justify="space-around">
             {round.players.map((player, index) => (
               <Grid key={index * 0.6969} item>
@@ -66,13 +78,19 @@ const DisplayRounds = (props) => {
     <div className={classes.roundsContainer}>
       <Divider />
       {props.data.ongoing_rounds.length > 0 ? (
-        <Typography align="center">Ongoing rounds</Typography>
+        <Typography align="center" component="p" variant="h5">
+          Ongoing rounds
+        </Typography>
       ) : null}
       <Grid container justify="center" direction="column" alignItems="center">
         {props.data.ongoing_rounds.map((round, index) =>
           generateRoundBox(round, index * 0.642, false)
         )}
-        <Typography align="center">Finished rounds</Typography>
+        {props.data.finished_rounds.length > 0 ? (
+          <Typography align="center" component="p" variant="h5">
+            Finished rounds
+          </Typography>
+        ) : null}
         {props.data.finished_rounds.map((round, index) =>
           generateRoundBox(round, index, true)
         )}

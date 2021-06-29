@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
-import { ToastContainer, toast } from "react-toastify";
 import axiosInstance from "../utils/axiosHandler";
 import FinishHole from "../components/FinishHole";
 import FinishRoundDialog from "../components/FinishRoundDialog";
@@ -13,7 +12,6 @@ const OngoingRoundPage = () => {
   const [isCurrentHole, setCurrentHole] = useState();
 
   let resultsChanged = false;
-  //Faktisk funksjonalitet for dette så det ikke postes noe dersm ingenting er endret.
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,12 +94,6 @@ const OngoingRoundPage = () => {
         <h5>Loading round...</h5>
       )}
       <Navbar />
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        closeOnClick
-        draggable
-      />
     </React.Fragment>
   );
 };

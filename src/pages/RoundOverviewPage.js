@@ -6,7 +6,9 @@ import RoundDetails from "../components/RoundDetails";
 const RoundOverviewPage = () => {
   return (
     <React.Fragment>
-      <Header /> <RoundDetails /> <Navbar />
+      <Header />
+      <RoundDetails />
+      <Navbar />
     </React.Fragment>
   );
 };

@@ -4,13 +4,13 @@ import { TextField, Grid, Button, Link, Typography } from "@material-ui/core";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CustomImageLoader from "react-custom-image-loader.";
 
 const useStyles = makeStyles((theme) => ({
   form: {
     "& > *": {
       margin: "auto",
       width: "80%",
+      marginTop: "5%",
     },
   },
 }));
@@ -47,10 +47,10 @@ const Register = () => {
   const classes = useStyles();
   return (
     <React.Fragment>
+      <Typography compoennt="h3" variant="h3" align="center">
+        Register
+      </Typography>
       <form className={classes.form} onSubmit={handleRegister}>
-        <Typography compoennt="h3" variant="h3" align="center">
-          Register
-        </Typography>
         <Grid
           container
           direction="column"
@@ -90,7 +90,12 @@ const Register = () => {
             />
           </Grid>
           <Grid item>
-            <Button type="submit" variant="contained" color="primary" fullWidth>
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              fullWidth
+            >
               Sign up
             </Button>
           </Grid>

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 const handleLogout = () => {
   axiosInstance
-    .post("api/users/logout/", { refresh: sessionStorage.getItem("refresh") })
+    .post("/api/users/logout/", { refresh: sessionStorage.getItem("refresh") })
     .then((res) => {
       if (res.status === 205) {
         sessionStorage.removeItem("access");
