@@ -3,7 +3,7 @@ from .models import GolfRound, HoleResult
 from rest_framework.response import Response
 from django.core.exceptions import ValidationError
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import GolfRoundDetailSerializer, GolfRoundSerializer
 from users.models import User
 from users.serializers import UsernameAndIdSerializer
@@ -81,3 +81,11 @@ class RoundOverviewView(APIView):
         round = get_object_or_404(GolfRound, id=id)
         serializer = GolfRoundDetailSerializer(round)
         return Response(serializer.data)
+
+class GolfRoundStatistics(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        rounds = GolfRound.objects.filter(Q(players__id=request.user.id) & Q(finished=True))
+        serializer = GolfRoundDetailSerializer(rounds, many=True)
+        return Response({'rounds': serializer.data, 'user': request.user.username})

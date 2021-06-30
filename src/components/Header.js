@@ -11,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarTitle: {
     flex: 1,
+    color: theme.palette.primary.secondary,
+    fontFamily: "Penna",
   },
 }));
 
