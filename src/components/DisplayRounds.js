@@ -2,6 +2,8 @@ import { Badge, Box, Divider, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { getReadableDate } from "../utils/Utils";
+import { useHistory, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   roundsContainer: {
@@ -25,11 +27,28 @@ const useStyles = makeStyles((theme) => ({
   courseDate: {
     marginTop: "4px",
     paddingBottom: "20px",
+    fontSize: "0.75em",
   },
 }));
 
 const DisplayRounds = (props) => {
   const classes = useStyles();
+  const history = useHistory();
+  const search = new URLSearchParams(useLocation().search);
+  const isLogin = search.get("login");
+
+  if (isLogin === "true") {
+    const username = search.get("username");
+    toast.success(
+      `Successfully logged in. Welcome ${
+        username[0].toUpperCase() + username.slice(1).toLowerCase()
+      }!`,
+      {
+        toastId: "preventDuplicateId",
+      }
+    );
+    history.replace("/rounds/");
+  }
 
   const generateRoundBox = (round, index, finished) => {
     return (
@@ -46,14 +65,20 @@ const DisplayRounds = (props) => {
       >
         <Box
           onClick={() => {
-            window.location = `rounds/${round.id}`;
+            window.location = `rounds/${round.id}/${
+              finished ? "overview" : ""
+            }`;
           }}
         >
           <h3 className={classes.courseInfo}>
             <b>{round.course.name + " - " + round.course.holes + " Holes"}</b>
           </h3>
           {/*Gjør datoen mindre og tettere mot navnet*/}
-          <Typography component="h6" variant="p" className={classes.courseDate}>
+          <Typography
+            component="p"
+            variant="inherit"
+            className={classes.courseDate}
+          >
             {getReadableDate(round.date)}
           </Typography>
           <Grid container direction="row" spacing={1} justify="space-around">
@@ -87,9 +112,12 @@ const DisplayRounds = (props) => {
           generateRoundBox(round, index * 0.642, false)
         )}
         {props.data.finished_rounds.length > 0 ? (
-          <Typography align="center" component="p" variant="h5">
-            Finished rounds
-          </Typography>
+          <React.Fragment>
+            <Divider style={{ width: "100%" }} />
+            <Typography align="center" component="p" variant="h5">
+              Finished rounds
+            </Typography>
+          </React.Fragment>
         ) : null}
         {props.data.finished_rounds.map((round, index) =>
           generateRoundBox(round, index, true)

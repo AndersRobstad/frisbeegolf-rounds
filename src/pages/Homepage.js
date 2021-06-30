@@ -1,12 +1,10 @@
 import { Button, Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-//import { makeStyles } from "@material-ui/core/styles";
 import Header from "../components/Header";
 import DisplayRounds from "../components/DisplayRounds";
 import Navbar from "../components/Navbar";
 import axiosInstance from "../utils/axiosHandler";
-
-//const useStyles = makeStyles((theme) => ({}));
+import { ToastContainer } from "react-toastify";
 
 const Homepage = () => {
   //const classes = useStyles();
@@ -18,6 +16,7 @@ const Homepage = () => {
     };
     fetchData();
   }, []);
+
   return (
     <React.Fragment>
       <Header />
@@ -30,6 +29,13 @@ const Homepage = () => {
       </Grid>
       {isRounds ? <DisplayRounds data={isRounds} /> : null}
       <Navbar />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        limit={1}
+        closeOnClick
+        draggable
+      />
     </React.Fragment>
   );
 };

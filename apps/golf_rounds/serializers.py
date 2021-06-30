@@ -29,11 +29,12 @@ class GolfRoundDetailSerializer(serializers.ModelSerializer):
     scores = serializers.SerializerMethodField()
 
     def get_scores(self, obj):
-        result = [0, 0]
+        number_of_players = len(obj.players.all())
+        result = [0 for x in range(number_of_players)]
         for hole_result in obj.hole_results.all():
             par = hole_result.get_par()
             scores = hole_result.scores
-            for i in range(len(obj.players.all())):
+            for i in range(number_of_players):
                 result[i] = result[i] + ((scores[i] - par) if scores[i] != 0 else 0)
         return result
 

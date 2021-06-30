@@ -30,7 +30,7 @@ const handleRegister = (formEvent) => {
   const data = Object.fromEntries(formData);
   axios.post("/api/users/create/", data).then((res) => {
     if (res.status === 201) {
-      toast.success("Account created, you can now sign in!");
+      window.location = "/?newUser=true"
     } else {
       if (res.data.username) {
         toast.error(res.data.username[0]);

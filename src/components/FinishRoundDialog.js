@@ -52,7 +52,7 @@ const FinishRoundDialog = (props) => {
       })
       .then((res) => {
         if (res.status === 200) {
-          window.location = `/rounds/${res.data}/overview/`;
+          window.location = `/rounds/${res.data}/overview/?finishedNow=true`;
         }
       });
   };
@@ -125,7 +125,7 @@ const FinishRoundDialog = (props) => {
         style={{ marginTop: "25%" }}
         closeOnClick={false}
         draggable={false}
-        autoClose={false}
+        autoClose={5000}
         position="top-center"
       />
     </React.Fragment>

@@ -23,6 +23,7 @@ const RoundDetails = () => {
   const classes = useStyles();
   const [isRound, setRound] = useState();
   const params = useParams();
+  console.log(isRound);
   const splits = isRound ? (isRound.course.holes === 18 ? 2 : 3) : 2;
   const perSection = (isRound ? isRound.course.holes : 18) / splits;
   const placements = isRound ? [...isRound.scores].sort() : [];

@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import axiosInstance from "../utils/axiosHandler";
 import FinishHole from "../components/FinishHole";
 import FinishRoundDialog from "../components/FinishRoundDialog";
+import { toast } from "react-toastify";
 
 const OngoingRoundPage = () => {
   const params = useParams();
   const [isRound, setRound] = useState("");
   const [isCurrentHole, setCurrentHole] = useState();
+
+  const history = useHistory();
+  const isCreated = new URLSearchParams(useLocation().search).get("created");
+
+  if (isCreated === "true") {
+    toast.success("You have created a new round, good luck!", {
+      toastId: "preventDuplicateId",
+    });
+    history.replace(`/rounds/${params.id}/`);
+  }
 
   let resultsChanged = false;
 

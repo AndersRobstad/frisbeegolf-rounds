@@ -1,5 +1,3 @@
-import React from "react";
-
 const getReadableDate = (unreadableDate) => {
   const year = unreadableDate.substring(0, 4);
   const month = unreadableDate.substring(5, 7);

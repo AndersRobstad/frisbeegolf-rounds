@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Grid, Button, Link, Typography } from "@material-ui/core";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { useLocation, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -19,19 +20,34 @@ const handleLogIn = (formEvent) => {
   formEvent.preventDefault();
   const formData = new FormData(formEvent.target);
   const data = Object.fromEntries(formData);
-  axios.post("api/users/authenticate/", data).then((res) => {
-    if (res.status === 200) {
-      sessionStorage.setItem("access", res.data.access);
-      sessionStorage.setItem("refresh", res.data.refresh);
-      window.location = "/rounds";
-    } else {
+  axios
+    .post("api/users/authenticate/", data)
+    .then((res) => {
+      if (res.status === 200) {
+        sessionStorage.setItem("access", res.data.access);
+        sessionStorage.setItem("refresh", res.data.refresh);
+        window.location = `/rounds?login=true&username=${data.username}`;
+      } else {
+        toast.error("Wrong username or password, please try again.");
+      }
+    })
+    .catch((err) => {
       toast.error("Wrong username or password, please try again.");
-    }
-  });
+    });
 };
 
 const Homepage = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const newUser = new URLSearchParams(useLocation().search).get("newUser");
+
+  if (newUser === "true") {
+    toast.success("Account sucsessfully created! You may now login.", {
+      toastId: "preventDuplicateId",
+    });
+    history.replace("/");
+  }
+
   return (
     <React.Fragment>
       <Typography compoennt="h3" variant="h3" align="center">
@@ -82,6 +98,7 @@ const Homepage = () => {
       <ToastContainer
         position="top-center"
         autoClose={5000}
+        limit={1}
         closeOnClick
         draggable
       />
