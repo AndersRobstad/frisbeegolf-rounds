@@ -14,7 +14,8 @@ const RoundOverviewPage = () => {
 
   if (isFinishedNow === "true") {
     toast.success("Round completed!", {
-      toastId: "preventDuplicateId",
+      toastId: "roundCompleted",
+      containerId: "normal",
     });
     history.replace(`/rounds/${params.id}/overview/`);
   }

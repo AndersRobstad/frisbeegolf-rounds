@@ -6,6 +6,7 @@ import axiosInstance from "../utils/axiosHandler";
 import FinishHole from "../components/FinishHole";
 import FinishRoundDialog from "../components/FinishRoundDialog";
 import { toast } from "react-toastify";
+import RoundMenu from "../components/RoundMenu";
 
 const OngoingRoundPage = () => {
   const params = useParams();
@@ -16,8 +17,9 @@ const OngoingRoundPage = () => {
   const isCreated = new URLSearchParams(useLocation().search).get("created");
 
   if (isCreated === "true") {
-    toast.success("You have created a new round, good luck!", {
-      toastId: "preventDuplicateId",
+    toast("You have created a new round, good luck!", {
+      containerId: "normal",
+      toastId: "newRound",
     });
     history.replace(`/rounds/${params.id}/`);
   }
@@ -70,7 +72,6 @@ const OngoingRoundPage = () => {
     const scores = new Array(isRound.players.length).fill(0);
     isRound.hole_results.forEach((hole_result) => {
       hole_result.scores.forEach((score, index) => {
-        console.log();
         scores[index] += score !== 0 ? score - hole_result.hole.par : 0;
       });
     });
@@ -104,6 +105,7 @@ const OngoingRoundPage = () => {
       ) : (
         <h5>Loading round...</h5>
       )}
+      <RoundMenu />
       <Navbar />
     </React.Fragment>
   );

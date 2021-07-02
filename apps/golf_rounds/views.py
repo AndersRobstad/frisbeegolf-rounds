@@ -67,6 +67,11 @@ class RoundDetails(APIView):
         hole_scores.save()
         return Response(round.id)
 
+    def delete(self, request, id):
+        round = get_object_or_404(GolfRound, id=id)
+        round.delete()
+        return Response("OK")
+
 class FinishHoleView(APIView):
 
     def post(self, request, id):

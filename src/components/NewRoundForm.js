@@ -34,13 +34,16 @@ const NewRoundForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isPlayers.length < 1) {
-      toast.error("Please select atleast one player");
+      toast.error("Please select atleast one player", {
+        containerId: "normal",
+        toastId: "noPlayerSelected",
+      });
     } else {
       const data = {
         course: isCourse,
         players: isPlayers,
       };
-      axiosInstance.post("api/rounds/new/", data).then((res) => {
+      axiosInstance.post("/api/rounds/new/", data).then((res) => {
         if (res.status === 201) {
           window.location = `/rounds/${res.data.id}/?created=true`;
         }

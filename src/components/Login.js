@@ -28,11 +28,17 @@ const handleLogIn = (formEvent) => {
         sessionStorage.setItem("refresh", res.data.refresh);
         window.location = `/rounds?login=true&username=${data.username}`;
       } else {
-        toast.error("Wrong username or password, please try again.");
+        toast.error("Wrong username or password, please try again.", {
+          containerId: "normal",
+          toastId: "wrongCredentials",
+        });
       }
     })
     .catch((err) => {
-      toast.error("Wrong username or password, please try again.");
+      toast.error("Wrong username or password, please try again.", {
+        containerId: "normal",
+        toastId: "servererror",
+      });
     });
 };
 
@@ -43,7 +49,8 @@ const Homepage = () => {
 
   if (newUser === "true") {
     toast.success("Account sucsessfully created! You may now login.", {
-      toastId: "preventDuplicateId",
+      toastId: "createdAccount",
+      containerId: "normal",
     });
     history.replace("/");
   }

@@ -19,11 +19,11 @@ import { useSwipeable } from "react-swipeable";
 const useStyles = makeStyles((theme) => ({
   prevButton: {
     position: "absolute",
-    top: "15%",
+    top: "22%",
   },
   nextButton: {
     position: "absolute",
-    top: "15%",
+    top: "22%",
     right: "0",
   },
   swipeEventBox: {

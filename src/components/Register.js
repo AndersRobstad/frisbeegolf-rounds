@@ -30,13 +30,19 @@ const handleRegister = (formEvent) => {
   const data = Object.fromEntries(formData);
   axios.post("/api/users/create/", data).then((res) => {
     if (res.status === 201) {
-      window.location = "/?newUser=true"
+      window.location = "/?newUser=true";
     } else {
       if (res.data.username) {
-        toast.error(res.data.username[0]);
+        toast.error(res.data.username[0], {
+          containerId: "normal",
+          toastId: "usernameError",
+        });
       }
       if (res.data.password) {
-        toast.error("Password: " + res.data.password[0]);
+        toast.error("Password: " + res.data.password[0], {
+          containerId: "normal",
+          toastId: "passwordNotStrong",
+        });
       }
     }
   });

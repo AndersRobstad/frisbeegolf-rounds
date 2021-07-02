@@ -28,5 +28,9 @@ class GolfRound(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     finished = models.BooleanField(default=False)
 
+    def delete(self, *args, **kwargs):
+        self.hole_results.all().delete()
+        super(GolfRound, self).delete(*args, **kwargs)
+
     def __str__(self):
         return (self.course.name + " (" + str(self.date))[0:-16] + ")"

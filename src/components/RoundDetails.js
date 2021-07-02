@@ -1,4 +1,5 @@
 import {
+  Badge,
   Table,
   TableBody,
   TableCell,
@@ -23,7 +24,6 @@ const RoundDetails = () => {
   const classes = useStyles();
   const [isRound, setRound] = useState();
   const params = useParams();
-  console.log(isRound);
   const splits = isRound ? (isRound.course.holes === 18 ? 2 : 3) : 2;
   const perSection = (isRound ? isRound.course.holes : 18) / splits;
   const placements = isRound ? [...isRound.scores].sort() : [];
@@ -45,15 +45,17 @@ const RoundDetails = () => {
 
     const getColor = (difference) => {
       if (difference === -2) {
-        return "gold";
+        return "#e8e22c";
       } else if (difference === -1) {
-        return "green";
+        return "#1b9955";
       } else if (difference === 0) {
-        return "grey";
+        return "#676461";
       } else if (difference === 1) {
-        return "red";
+        return "#b8000a";
       } else if (difference === 2) {
-        return "purple";
+        return "#90289d";
+      } else if (difference === 3) {
+        return "#7d5d4f";
       } else {
         return "#E75480";
       }
@@ -78,7 +80,17 @@ const RoundDetails = () => {
                 className={classes.tableCell}
                 style={{ width: 60 / perSection + "%" }}
               >
-                {number + 1 + startingHole}
+                {
+                  <Badge
+                    badgeContent={
+                      <p style={{ fontSize: "0.55em" }}>
+                        {isRound.hole_results[number + startingHole].hole.par}
+                      </p>
+                    }
+                  >
+                    {number + 1 + startingHole}
+                  </Badge>
+                }
               </TableCell>
             ))}
           </TableRow>

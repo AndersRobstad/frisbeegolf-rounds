@@ -1,7 +1,6 @@
 import React from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Button, Grid, Link } from "@material-ui/core/";
-import "react-toastify/dist/ReactToastify.css";
 
 const ToastContainerContent = () => {
   return (
@@ -36,19 +35,11 @@ const ToastContainerContent = () => {
 };
 
 const RequireAuthDialog = () => {
-  toast(<ToastContainerContent />);
-  return (
-    <ToastContainer
-      toastStyle={{ marginTop: "20vh" }}
-      bodyStyle={{ width: "100%", textAlign: "center", color: "black" }}
-      autoClose={false}
-      closeButton={false}
-      closeOnClick={false}
-      draggable={false}
-      limit={1}
-      position="top-center"
-    />
-  );
+  toast(<ToastContainerContent />, {
+    containerId: "dialog",
+    toastId: "reqAuth",
+  });
+  return null;
 };
 
 export default RequireAuthDialog;

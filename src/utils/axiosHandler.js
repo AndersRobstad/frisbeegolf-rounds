@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
     //Logs the user out, since the refresh token then probably was expiered.
     if (
       error.response.status === 401 &&
-      originalRequest.url === "api/users/refresh/"
+      originalRequest.url === "/api/users/refresh/"
     ) {
       window.location.href = "/";
       return Promise.reject(error);
@@ -59,7 +59,7 @@ axiosInstance.interceptors.response.use(
         if (tokenParts.exp > now) {
           //Token not expiered, tries to refresh the tokenpair, and then tries to perform the original request again.
           return axiosInstance
-            .post("api/users/refresh/", { refresh: refreshToken })
+            .post("/api/users/refresh/", { refresh: refreshToken })
             .then((response) => {
               sessionStorage.setItem("access", response.data.access);
               sessionStorage.setItem("refresh", response.data.refresh);

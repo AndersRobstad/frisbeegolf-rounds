@@ -2,8 +2,7 @@ import { Button, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import axiosInstance from "../utils/axiosHandler";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   finishRoundContainer: {
@@ -38,7 +37,10 @@ const FinishRoundDialog = (props) => {
       return true;
     });
     if (!allHolesFinished) {
-      toast(<ToastContent />);
+      toast(<ToastContent />, {
+        containerId: "dialog",
+        toastId: "finishround",
+      });
     } else {
       postRoundData();
     }
@@ -87,7 +89,7 @@ const FinishRoundDialog = (props) => {
           </Grid>
           <Grid item>
             <Button
-              onClick={() => window.location.reload()}
+              onClick={() => toast.dismiss()}
               variant="contained"
               color="primary"
               size="large"
@@ -116,18 +118,6 @@ const FinishRoundDialog = (props) => {
           </Button>
         </Grid>
       </div>
-      <ToastContainer
-        bodyStyle={{
-          width: "100%",
-          textAlign: "center",
-          color: "black",
-        }}
-        style={{ marginTop: "25%" }}
-        closeOnClick={false}
-        draggable={false}
-        autoClose={5000}
-        position="top-center"
-      />
     </React.Fragment>
   );
 };

@@ -25,7 +25,10 @@ const handleLogout = () => {
         sessionStorage.removeItem("refresh");
         window.location = "/";
       } else {
-        toast.error("Could not log out.");
+        toast.error("Could not log out.", {
+          containerId: "normal",
+          toastId: "logouterror",
+        });
       }
     });
 };

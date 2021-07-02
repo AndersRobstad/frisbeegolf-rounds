@@ -44,7 +44,8 @@ const DisplayRounds = (props) => {
         username[0].toUpperCase() + username.slice(1).toLowerCase()
       }!`,
       {
-        toastId: "preventDuplicateId",
+        toastId: "loggedInToast",
+        containerId: "normal",
       }
     );
     history.replace("/rounds/");
@@ -65,7 +66,7 @@ const DisplayRounds = (props) => {
       >
         <Box
           onClick={() => {
-            window.location = `rounds/${round.id}/${
+            window.location = `/rounds/${round.id}/${
               finished ? "overview" : ""
             }`;
           }}
@@ -73,7 +74,6 @@ const DisplayRounds = (props) => {
           <h3 className={classes.courseInfo}>
             <b>{round.course.name + " - " + round.course.holes + " Holes"}</b>
           </h3>
-          {/*Gjør datoen mindre og tettere mot navnet*/}
           <Typography
             component="p"
             variant="inherit"
