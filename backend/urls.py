@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/rounds/', include('golf_rounds.urls')),
     path('<str:path>/', index, name='index'),
     path('<str:path>/<int:id>', index, name='index'),
+    path('<str:path>/<int:id>/<str:param>', index, name='index'),
 ]
