@@ -9,7 +9,7 @@ const DeleteRoundToastContent = (props) => {
       .delete(`/api/rounds/${props.roundId}/`)
       .then((res) => {
         if (res.status === 200) {
-          window.location = "/rounds/";
+          window.location = "/rounds";
         }
       })
       .catch((err) => {
