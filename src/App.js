@@ -35,7 +35,7 @@ function App() {
             exact
           />
           <Route
-            path="/rounds/:id/overview"
+            path="/rounds/:id/overview/"
             component={RequireAuth(RoundOverviewPage)}
             exact
           />

@@ -79,7 +79,7 @@ const FinishHole = (props) => {
       newScore = prevScore + (negative ? -1 : 1);
     }
     props.data.scores[index] = newScore;
-    props.currentScores[index] = newScore - props.data.hole.par;
+    props.currentScores[index] += newScore - props.data.hole.par;
     setNewPage(false);
     forceUpdate();
     props.setResultsChanged();

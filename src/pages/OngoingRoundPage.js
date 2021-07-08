@@ -21,7 +21,7 @@ const OngoingRoundPage = () => {
       containerId: "normal",
       toastId: "newRound",
     });
-    history.replace(`/rounds/${params.id}/`);
+    history.replace(`/rounds/${params.id}`);
   }
 
   let resultsChanged = false;

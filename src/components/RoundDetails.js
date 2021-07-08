@@ -136,7 +136,10 @@ const RoundDetails = () => {
       {isRound ? (
         <React.Fragment>
           <Typography component="h5" variant="h5" align="center" noWrap>
-            {isRound.course.name + " - " + getReadableDate(isRound.date)}
+            {isRound.course.name}
+          </Typography>
+          <Typography component="p" variant="caption" align="center" noWrap>
+            {getReadableDate(isRound.date)}
           </Typography>
           <Table>
             <TableBody>

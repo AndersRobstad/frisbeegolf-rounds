@@ -54,7 +54,7 @@ const FinishRoundDialog = (props) => {
       })
       .then((res) => {
         if (res.status === 200) {
-          window.location = `/rounds/${res.data}/overview/?finishedNow=true`;
+          window.location = `/rounds/${res.data}/overview?finishedNow=true`;
         }
       });
   };

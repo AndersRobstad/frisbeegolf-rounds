@@ -17,7 +17,7 @@ const RoundOverviewPage = () => {
       toastId: "roundCompleted",
       containerId: "normal",
     });
-    history.replace(`/rounds/${params.id}/overview/`);
+    history.replace(`/rounds/${params.id}/overview`);
   }
 
   return (
