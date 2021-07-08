@@ -30,7 +30,7 @@ function App() {
           <Route path="/new" component={RequireAuth(NewRoundPage)} exact />
           <Route path="/rounds" component={RequireAuth(Homepage)} exact />
           <Route
-            path="/rounds/:id"
+            path="/rounds/:id/"
             component={RequireAuth(OngoingRoundPage)}
             exact
           />
