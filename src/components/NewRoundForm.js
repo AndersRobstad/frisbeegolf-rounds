@@ -45,7 +45,7 @@ const NewRoundForm = () => {
       };
       axiosInstance.post("/api/rounds/new/", data).then((res) => {
         if (res.status === 201) {
-          window.location = `/rounds/${res.data.id}/?created=true`;
+          window.location = `/rounds/${res.data.id}?created=true`;
         }
       });
     }

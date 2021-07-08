@@ -66,8 +66,8 @@ const DisplayRounds = (props) => {
       >
         <Box
           onClick={() => {
-            window.location = `/rounds/${round.id}/${
-              finished ? "overview" : ""
+            window.location = `/rounds/${round.id}${
+              finished ? "/overview" : ""
             }`;
           }}
         >
